@@ -61,6 +61,7 @@
     <Compile Include="..\Solution Items\AssemblyVersion.cs">
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Classes\Columnizer\AndroidColumnizer.cs" />
     <Compile Include="Classes\Columnizer\ColumnizerPicker.cs" />
     <Compile Include="Classes\Columnizer\SquareBracketColumnizer.cs" />
     <Compile Include="Classes\Columnizer\TimeFormatDeterminer.cs" />
@@ -583,7 +584,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NLog.Config">
-      <Version>4.6.7</Version>
+      <Version>4.7.13</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

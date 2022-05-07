@@ -15,6 +15,7 @@ namespace LogExpert
         #region ILogLineColumnizer implementation
         private readonly Regex lineRegex = new Regex(@"(?<date>\d+-\d+) (?<time>\d{2}:\d{2}:\d{2}\.\d{3})\s+(?<pid>\d+)\s+(?<tid>\d+)\s+(?<level>[I|V|W|E|D|F])\s+(?<tag>.*?): (?<txt>.*)");
         protected int timeOffset = 0;
+        private const int LOG_MAX_LENGTH = 2048;
         private TimeFormatDeterminer _timeFormatDeterminer = new TimeFormatDeterminer();
 
         public bool IsTimeshiftImplemented()
@@ -128,10 +129,10 @@ namespace LogExpert
             cLogLine.ColumnValues = columns.Select(a => a as IColumn).ToArray();
 
             string temp = line.FullLine;
-            if (temp.Length > 1024)
+            if (temp.Length > LOG_MAX_LENGTH )
             {
                 // spam
-                temp = temp.Substring(0, 1024);
+                temp = temp.Substring(0, LOG_MAX_LENGTH);
                 columns[3].FullValue = temp;
                 return cLogLine;
             }

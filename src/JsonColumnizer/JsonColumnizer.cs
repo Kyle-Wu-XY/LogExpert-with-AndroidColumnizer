@@ -182,6 +182,11 @@ namespace JsonColumnizer
 
         protected static JObject ParseJson(ILogLine line)
         {
+            if (line == null || string.IsNullOrEmpty(line.FullLine))
+            {
+                return null;
+            }
+
             return JsonConvert.DeserializeObject<JObject>(line.FullLine, new JsonSerializerSettings()
             {
                 Error = (sender, args) => { args.ErrorContext.Handled = true; } //We ignore the error and handle the null value

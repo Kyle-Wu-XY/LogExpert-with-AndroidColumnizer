@@ -950,9 +950,9 @@ namespace LogExpert
             | System.Windows.Forms.AnchorStyles.Right)));
             this.filterComboBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.filterComboBox.FormattingEnabled = true;
-            this.filterComboBox.Location = new System.Drawing.Point(73, 5);
+            this.filterComboBox.Location = new System.Drawing.Point(83, 5);
             this.filterComboBox.Name = "filterComboBox";
-            this.filterComboBox.Size = new System.Drawing.Size(206, 22);
+            this.filterComboBox.Size = new System.Drawing.Size(196, 22);
             this.filterComboBox.TabIndex = 4;
             this.helpToolTip.SetToolTip(this.filterComboBox, "Search string for the filter");
             this.filterComboBox.TextChanged += new System.EventHandler(this.OnFilterComboBoxTextChanged);

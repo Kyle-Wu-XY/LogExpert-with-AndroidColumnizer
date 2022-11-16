@@ -1080,14 +1080,78 @@ namespace LogExpert
             AddBookmarkAndEditComment();
         }
 
+        private HighlightColor getUnusedColorGroup(String selText)
+        {
+            foreach(HighlightColor highlightColor in _tempHighlightColorList)
+            {
+                if (highlightColor.text.IsEmpty())
+                {
+                    highlightColor.text = selText;
+                    return highlightColor;
+                }
+            }
+
+            return null;
+        }
+
+        private bool isSelectedTextMarked(String selText)
+        {
+            foreach(HilightEntry entry in _tempHighlightEntryList)
+            {
+                if(entry.SearchText == selText)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void removeMarkedItem(String selText)
+        {
+            foreach (HilightEntry entry in _tempHighlightEntryList.ToArray())
+            {
+                if(entry.SearchText == selText)
+                {
+                    lock (_tempHighlightEntryListLock)
+                    {
+                        _tempHighlightEntryList.Remove(entry);
+                    }
+                }
+            } 
+
+            foreach(HighlightColor highlightColor in _tempHighlightColorList)
+            {
+                if(highlightColor.text == selText)
+                {
+                    highlightColor.text = "";
+                }
+            }
+        }
+
         private void OnHighlightSelectionInLogFileToolStripMenuItemClick(object sender, EventArgs e)
         {
             if (dataGridView.EditingControl is DataGridViewTextBoxEditingControl ctl)
             {
-                HilightEntry he = new HilightEntry(ctl.SelectedText, Color.Red, Color.Yellow, false, true, false, false, false, false, null, false);
-                lock (_tempHighlightEntryListLock)
+                if (isSelectedTextMarked(ctl.SelectedText))
                 {
-                    _tempHighlightEntryList.Add(he);
+                    removeMarkedItem(ctl.SelectedText);
+                }
+                else
+                { 
+                    HighlightColor highlightColor = getUnusedColorGroup(ctl.SelectedText); 
+                    if(null == highlightColor)
+                    {
+                        // Default color group
+                        highlightColor = new HighlightColor(Color.Yellow, Color.Red); 
+                    }
+
+                    // HilightEntry he = new HilightEntry(ctl.SelectedText, Color.Red, Color.Yellow, false, true, false, false, false, false, null, false);
+                    HilightEntry he = new HilightEntry(ctl.SelectedText, highlightColor.fg, highlightColor.bg, false, true, false, false, false, false, null, false);
+                    lock (_tempHighlightEntryListLock)
+                    {
+                        _tempHighlightEntryList.Add(he);
+                    }
                 }
 
                 dataGridView.CancelEdit();
@@ -1100,10 +1164,25 @@ namespace LogExpert
         {
             if (dataGridView.EditingControl is DataGridViewTextBoxEditingControl ctl)
             {
-                HilightEntry he = new HilightEntry(ctl.SelectedText, Color.Red, Color.Yellow, false, true, false, false, false, false, null, true);
-                lock (_tempHighlightEntryListLock)
+                if (isSelectedTextMarked(ctl.SelectedText))
                 {
-                    _tempHighlightEntryList.Add(he);
+                    removeMarkedItem(ctl.SelectedText);
+                }
+                else
+                {
+                    HighlightColor highlightColor = getUnusedColorGroup(ctl.SelectedText);
+                    if(null == highlightColor)
+                    {
+                        // Default color group
+                        highlightColor = new HighlightColor(Color.Yellow, Color.Red);
+                    }
+
+                    HilightEntry he = new HilightEntry(ctl.SelectedText, highlightColor.fg, highlightColor.bg, false, true, false, false, false, false, null, true);
+                    // HilightEntry he = new HilightEntry(ctl.SelectedText, highlightColor.fg, Color.Yellow, false, true, false, false, false, false, null, true);
+                    lock (_tempHighlightEntryListLock)
+                    {
+                        _tempHighlightEntryList.Add(he);
+                    }
                 }
 
                 dataGridView.CancelEdit();

@@ -478,9 +478,15 @@ namespace LogExpert
                 bool found = false;
                 foreach (int colIndex in filterParams.columnList)
                 {
-                    if (colIndex < columns.ColumnValues.Length
-                    ) // just to be sure, maybe the columnizer has changed anyhow
+                    if (colIndex < columns.ColumnValues.Length )
                     {
+                        // just to be sure, maybe the columnizer has changed anyhow
+                        IColumn column = columns.ColumnValues[colIndex];
+                        if(null == column)
+                        {
+                            continue;
+                        }
+
                         if (columns.ColumnValues[colIndex].FullValue.Trim().Length == 0)
                         {
                             if (filterParams.emptyColumnUsePrev)

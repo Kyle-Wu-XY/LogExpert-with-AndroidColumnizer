@@ -3532,6 +3532,11 @@ namespace LogExpert
                 _tempHighlightEntryList.Clear();
             }
 
+            foreach(HighlightColor highlightColor in _tempHighlightColorList)
+            {
+                highlightColor.text = "";
+            }
+
             RefreshAllGrids();
         }
 

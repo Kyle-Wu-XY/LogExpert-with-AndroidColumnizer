@@ -58,6 +58,7 @@ namespace LogExpert
         private readonly DelayedTrigger _statusLineTrigger = new DelayedTrigger(200);
         private readonly object _tempHighlightEntryListLock = new object();
 
+        private readonly HighlightColor _defaultHighlightColor = new HighlightColor(Color.Yellow, Color.Red);
         private readonly List<HighlightColor> _tempHighlightColorList = new List<HighlightColor>{
              new HighlightColor(Color.FromArgb(0xFF, 0xA1, 0xB7, 0xFF),Color.FromArgb(0xFF, 0x00, 0x1E, 0x80)),
              new HighlightColor(Color.FromArgb(0xFF, 0xFF, 0xA1, 0xC6),Color.FromArgb(0xFF, 0x80, 0x00, 0x5D)),

@@ -1143,7 +1143,7 @@ namespace LogExpert
                     if(null == highlightColor)
                     {
                         // Default color group
-                        highlightColor = new HighlightColor(Color.Yellow, Color.Red); 
+                        highlightColor = _defaultHighlightColor;
                     }
 
                     // HilightEntry he = new HilightEntry(ctl.SelectedText, Color.Red, Color.Yellow, false, true, false, false, false, false, null, false);
